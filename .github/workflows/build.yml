@@ -1,0 +1,32 @@
+name: Build on Pull Request
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up C++ 
+      uses: actions/setup-cpp@v2
+      with:
+        compiler: clang
+        cpp-version: 11
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential cmake
+
+    - name: Build the project
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . -- -j$(nproc)
