@@ -22,6 +22,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y build-essential cmake python3-pip
+        sudo apt install -y ros-humble-desktop
         pip3 install -U colcon-common-extensions  # Install colcon for ROS
 
     - name: Install Qt
