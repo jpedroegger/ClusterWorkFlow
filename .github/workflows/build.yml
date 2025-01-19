@@ -25,6 +25,7 @@ jobs:
 
     - name: Build the project
       run: |
+        cd JetRacer/src/head_unit/cluster_qt
         mkdir build
         cd build
         cmake ..
