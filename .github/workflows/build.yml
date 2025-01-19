@@ -26,6 +26,7 @@ jobs:
     - name: Install Qt
       run:
         sudo apt-get install -y qt6-base-dev qt6-tools-dev-tools
+        sudo apt install libqt5multimedia5
         
     - name: Build the project
       run: |
