@@ -38,6 +38,6 @@ jobs:
 
     - name: Testing the Cluster
       run: |
-        cd cluster_tests
-        ctest
+        cd JetRacer/src/head_unit/cluster_qt/build/cluster_tests        
+        ctest --verbose
   
