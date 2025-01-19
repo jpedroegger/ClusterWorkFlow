@@ -35,3 +35,9 @@ jobs:
         cd build
         cmake ..
         cmake --build . -- -j$(nproc)
+
+    - name: Testing the Cluster
+      run: |
+        cd cluster_tests
+        ctest
+  
