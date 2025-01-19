@@ -23,6 +23,11 @@ jobs:
         sudo apt update
         sudo apt install -y build-essential cmake
 
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.8.*'
+        
     - name: Build the project
       run: |
         cd JetRacer/src/head_unit/cluster_qt
