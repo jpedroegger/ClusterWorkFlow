@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  CLUSTER_DIR: JetRacer/src/head_unit/cluster_qt/
-  TEST_DIR: ${{ env.CLUSTER_DIR }}/build/cluster_tests
+  BUILD_DIR: JetRacer/src/head_unit/cluster_qt/build
+  TEST_DIR: $BUILD_DIR/cluster_tests
 
 jobs:
   build:
@@ -33,9 +33,8 @@ jobs:
         
     - name: Build the project
       run: |
-        cd $CLUSTER_DIR
-        mkdir build
-        cd build
+        mkdir -p $BUILD_DIR
+        cd $BUILD_DIR
         cmake ..
         cmake --build . -- -j$(nproc)
 
@@ -48,7 +47,7 @@ jobs:
 
     - name: Testing the Cluster
       run: |
-        cd JetRacer/src/head_unit/cluster_qt/build/cluster_tests
+        cd $TEST_DIR
         export QT_QPA_PLATFORM=offscreen
         ctest --verbose
   
