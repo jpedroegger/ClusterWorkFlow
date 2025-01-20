@@ -40,7 +40,7 @@ jobs:
 
     - name: Testing the Cluster
       run: |
-        cd $TEST_DIR
+        cd JetRacer/src/head_unit/cluster_qt/build/cluster_tests
         export QT_QPA_PLATFORM=offscreen
         ctest --verbose
   
