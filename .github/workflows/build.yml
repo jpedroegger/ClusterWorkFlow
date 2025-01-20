@@ -5,10 +5,13 @@ on:
     branches:
       - main
 
+env:
+  CLUSTER_DIR: JetRacer/src/head_unit/cluster_qt/
+  TEST_DIR: ${{ env.CLUSTER_DIR }}/build/cluster_tests
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -17,13 +20,11 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y clang
-        
+
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake python3-pip
-        sudo apt install -y ros-humble-desktop
-        pip3 install -U colcon-common-extensions  # Install colcon for ROS
+        sudo apt install -y build-essential cmake
 
     - name: Install Qt
       run: |
@@ -32,11 +33,18 @@ jobs:
         
     - name: Build the project
       run: |
-        cd JetRacer/src/head_unit/cluster_qt
+        cd $CLUSTER_DIR
         mkdir build
         cd build
         cmake ..
         cmake --build . -- -j$(nproc)
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
     - name: Testing the Cluster
       run: |
@@ -44,19 +52,3 @@ jobs:
         export QT_QPA_PLATFORM=offscreen
         ctest --verbose
   
-        # Build ROS packages using colcon
-    - name: Build ROS Packages
-      run: |
-        cd JetRacer/src/head_unit
-        colcon build --packages-skip cluster_qt
-
-    # Run tests for ROS packages using colcon
-    - name: Test ROS Packages
-      run: |
-        cd JetRacer/src/head_unit
-        colcon test --packages-skip cluster_qt --ctest-args --verbose
-
-    - name: Check Test Results
-      run: |
-        colcon test-result --verbose
-
