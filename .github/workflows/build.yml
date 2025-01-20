@@ -7,7 +7,6 @@ on:
 
 env:
   BUILD_DIR: JetRacer/src/head_unit/cluster_qt/build
-  TEST_DIR: JetRacer/src/head_unit/cluster_qt/build/cluster_tests
 
 jobs:
   build:
@@ -40,7 +39,7 @@ jobs:
 
     - name: Testing the Cluster
       run: |
-        cd $TEST_DIR
+        cd $BUILD_DIR/cluster_tests
         export QT_QPA_PLATFORM=offscreen
         ctest --verbose
   
